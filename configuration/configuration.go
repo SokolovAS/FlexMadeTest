@@ -20,11 +20,9 @@ type DBConfig struct {
 
 func New() (*Configuration, error) {
 	cfg := Configuration{}
-
 	if err := env.Parse(&cfg); err != nil {
 		return nil, err
 	}
-
 	return &cfg, nil
 }
 

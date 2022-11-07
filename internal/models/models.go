@@ -1,15 +1,15 @@
 package models
 
-// GetStatisticFilter request parameter represents filter.
-type GetStatisticFilter struct {
+// StatisticFilter request parameter represents filter.
+type StatisticFilter struct {
 	QueryType string
 	Sorting   string
 	Page      int
 	PerPage   int
 }
 
-// GetStatisticResultRow model for mapping database result.
-type GetStatisticResultRow struct {
+// StatisticResultRow model for mapping database result.
+type StatisticResultRow struct {
 	QueryID           int64   `gorm:"column:queryid"`
 	Query             string  `gorm:"column:query"`
 	MaxExecutionTime  float64 `gorm:"column:max_exec_time"`
@@ -17,21 +17,21 @@ type GetStatisticResultRow struct {
 }
 
 // TableName provides mode table name.
-func (g GetStatisticResultRow) TableName() string {
+func (g StatisticResultRow) TableName() string {
 	return "pg_stat_statements"
 }
 
-// GetStatisticResultCollection collection of GetStatisticResultRow
-type GetStatisticResultCollection []*GetStatisticResultRow
+// StatisticResultCollection collection of StatisticResultRow
+type StatisticResultCollection []*StatisticResultRow
 
-type GetQueriesRequest struct {
+type QueriesRequest struct {
 	QueryType string `validate:"omitempty,oneof=select insert update delete"`
 	Sorting   string `validate:"oneof=first-slow first-fast,required"`
 	Page      int    `validate:"gt=0,required"`
 	PerPage   int    `validate:"gt=0,required"`
 }
 
-type GetQueriesResponse []*QueryRow
+type QueriesResponse []*QueryRow
 
 type QueryRow struct {
 	QueryID           int64   `json:"query_id"`

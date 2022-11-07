@@ -44,7 +44,7 @@ func TestStatistic_GetQueriesStatistic(t *testing.T) {
 				validator: func() Validator {
 					mock := NewMockValidator(ctrl)
 
-					mock.EXPECT().Struct(&models.GetQueriesRequest{
+					mock.EXPECT().Struct(&models.QueriesRequest{
 						QueryType: "wrong-type",
 						Sorting:   "wrong-sorting",
 						Page:      1,
@@ -71,7 +71,7 @@ func TestStatistic_GetQueriesStatistic(t *testing.T) {
 				validator: func() Validator {
 					mock := NewMockValidator(ctrl)
 
-					mock.EXPECT().Struct(&models.GetQueriesRequest{
+					mock.EXPECT().Struct(&models.QueriesRequest{
 						QueryType: "select",
 						Sorting:   "first-slow",
 						Page:      1,
@@ -82,7 +82,7 @@ func TestStatistic_GetQueriesStatistic(t *testing.T) {
 				}(),
 				service: func() StatisticService {
 					mock := NewMockStatisticService(ctrl)
-					mock.EXPECT().GetStatistic(gomock.Any(), models.GetQueriesRequest{
+					mock.EXPECT().GetStatistic(gomock.Any(), models.QueriesRequest{
 						QueryType: "select",
 						Sorting:   "first-slow",
 						Page:      1,
@@ -100,7 +100,7 @@ func TestStatistic_GetQueriesStatistic(t *testing.T) {
 				validator: func() Validator {
 					mock := NewMockValidator(ctrl)
 
-					mock.EXPECT().Struct(&models.GetQueriesRequest{
+					mock.EXPECT().Struct(&models.QueriesRequest{
 						QueryType: "select",
 						Sorting:   "first-slow",
 						Page:      1,
@@ -111,12 +111,12 @@ func TestStatistic_GetQueriesStatistic(t *testing.T) {
 				}(),
 				service: func() StatisticService {
 					mock := NewMockStatisticService(ctrl)
-					mock.EXPECT().GetStatistic(gomock.Any(), models.GetQueriesRequest{
+					mock.EXPECT().GetStatistic(gomock.Any(), models.QueriesRequest{
 						QueryType: "select",
 						Sorting:   "first-slow",
 						Page:      1,
 						PerPage:   2,
-					}).Return(models.GetStatisticResultCollection{
+					}).Return(models.StatisticResultCollection{
 						{
 							QueryID:           1,
 							Query:             "TEST Q1",

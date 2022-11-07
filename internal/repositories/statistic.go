@@ -20,9 +20,9 @@ func NewStatistic(db *gorm.DB) Statistic {
 	return Statistic{db: db}
 }
 
-// GetStatistic builds request to the database by provided filter and returns models.GetStatisticResultCollection.
-func (s Statistic) GetStatistic(ctx context.Context, filter models.GetStatisticFilter) (models.GetStatisticResultCollection, error) {
-	col := make(models.GetStatisticResultCollection, 0)
+// GetStatistic builds request to the database by provided filter and returns models.StatisticResultCollection.
+func (s Statistic) GetStatistic(ctx context.Context, filter models.StatisticFilter) (models.StatisticResultCollection, error) {
+	col := make(models.StatisticResultCollection, 0)
 
 	q := s.db.WithContext(ctx)
 

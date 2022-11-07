@@ -73,10 +73,10 @@ func (m *MockStatisticService) EXPECT() *MockStatisticServiceMockRecorder {
 }
 
 // GetStatistic mocks base method.
-func (m *MockStatisticService) GetStatistic(ctx context.Context, req models.GetQueriesRequest) (models.GetStatisticResultCollection, error) {
+func (m *MockStatisticService) GetStatistic(ctx context.Context, req models.QueriesRequest) (models.StatisticResultCollection, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetStatistic", ctx, req)
-	ret0, _ := ret[0].(models.GetStatisticResultCollection)
+	ret0, _ := ret[0].(models.StatisticResultCollection)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

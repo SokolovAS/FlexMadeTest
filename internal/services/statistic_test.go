@@ -16,7 +16,7 @@ func TestStatistic_GetStatistic(t *testing.T) {
 	testError := errors.New("test error")
 
 	testCtx := context.Background()
-	testReq := models.GetQueriesRequest{
+	testReq := models.QueriesRequest{
 		QueryType: "select",
 		Sorting:   "asc",
 		Page:      1,
@@ -28,19 +28,19 @@ func TestStatistic_GetStatistic(t *testing.T) {
 	}
 	type args struct {
 		ctx context.Context
-		req models.GetQueriesRequest
+		req models.QueriesRequest
 	}
 	tests := map[string]struct {
 		fields  fields
 		args    args
-		want    models.GetStatisticResultCollection
+		want    models.StatisticResultCollection
 		wantErr error
 	}{
 		"error.getting statistic": {
 			fields: fields{
 				repository: func() StatisticRepository {
 					repo := NewMockStatisticRepository(mockCtrl)
-					repo.EXPECT().GetStatistic(testCtx, models.GetStatisticFilter{
+					repo.EXPECT().GetStatistic(testCtx, models.StatisticFilter{
 						QueryType: "select",
 						Sorting:   "asc",
 						Page:      1,
@@ -60,12 +60,12 @@ func TestStatistic_GetStatistic(t *testing.T) {
 			fields: fields{
 				repository: func() StatisticRepository {
 					repo := NewMockStatisticRepository(mockCtrl)
-					repo.EXPECT().GetStatistic(testCtx, models.GetStatisticFilter{
+					repo.EXPECT().GetStatistic(testCtx, models.StatisticFilter{
 						QueryType: "select",
 						Sorting:   "asc",
 						Page:      1,
 						PerPage:   2,
-					}).Return(models.GetStatisticResultCollection{
+					}).Return(models.StatisticResultCollection{
 						{
 							QueryID:           1,
 							Query:             "TEST Q1",
@@ -87,7 +87,7 @@ func TestStatistic_GetStatistic(t *testing.T) {
 				ctx: testCtx,
 				req: testReq,
 			},
-			want: models.GetStatisticResultCollection{
+			want: models.StatisticResultCollection{
 				{
 					QueryID:           1,
 					Query:             "TEST Q1",

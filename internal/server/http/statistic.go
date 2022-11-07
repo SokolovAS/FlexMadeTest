@@ -15,7 +15,7 @@ type Validator interface {
 }
 
 type StatisticService interface {
-	GetStatistic(ctx context.Context, req models.GetQueriesRequest) (models.GetStatisticResultCollection, error)
+	GetStatistic(ctx context.Context, req models.QueriesRequest) (models.StatisticResultCollection, error)
 }
 
 // Body represents message for dynamic json responses.
@@ -63,7 +63,7 @@ func (t Statistic) GetQueriesStatistic(ctx *fiber.Ctx) error {
 			JSON(NewBadRequestError("error parsing per-page parameter from request", err))
 	}
 
-	req := models.GetQueriesRequest{
+	req := models.QueriesRequest{
 		QueryType: ctx.Query(queryTypeParam),
 		Sorting:   ctx.Query(sortingParam, defaultSorting),
 		Page:      page,
@@ -75,7 +75,7 @@ func (t Statistic) GetQueriesStatistic(ctx *fiber.Ctx) error {
 			JSON(NewBadRequestError("request validation error", err))
 	}
 
-	gc := models.GetQueriesRequest{
+	gc := models.QueriesRequest{
 		QueryType: req.QueryType,
 		Sorting:   req.Sorting,
 		Page:      req.Page,
@@ -88,7 +88,7 @@ func (t Statistic) GetQueriesStatistic(ctx *fiber.Ctx) error {
 			JSON(NewInternalServerError("error getting database queries statistic", err))
 	}
 
-	resp := make(models.GetQueriesResponse, 0, len(data))
+	resp := make(models.QueriesResponse, 0, len(data))
 	for _, row := range data {
 		resp = append(resp, &models.QueryRow{
 			QueryID:           row.QueryID,
