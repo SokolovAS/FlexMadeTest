@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-//go:generate mockgen -destination=./contracts_mock_test.go -package=transport -source=./contracts.go
+//go:generate mockgen -destination=./statistic_mock_storage.go -package=http -source=./statistic.go
 
 type Validator interface {
 	Struct(s interface{}) error

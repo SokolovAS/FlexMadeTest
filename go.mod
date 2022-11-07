@@ -3,9 +3,12 @@ module FlexMadeTest
 go 1.18
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/caarlos0/env/v6 v6.10.1
+	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-playground/validator/v10 v10.11.1
 	github.com/gofiber/fiber/v2 v2.39.0
+	github.com/golang/mock v1.6.0
 	github.com/sirupsen/logrus v1.9.0
 	gorm.io/driver/postgres v1.4.5
 	gorm.io/gorm v1.24.1

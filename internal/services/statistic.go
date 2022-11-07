@@ -2,18 +2,22 @@ package services
 
 import (
 	"FlexMadeTest/internal/models"
-	"FlexMadeTest/internal/repositories"
 	"context"
 )
 
+//go:generate mockgen -destination=./statistic_mock_test.go -package=services -source=./statistic.go
+type StatisticRepository interface {
+	GetStatistic(ctx context.Context, filter models.GetStatisticFilter) (models.GetStatisticResultCollection, error)
+}
+
 // Statistic service implementation.
 type Statistic struct {
-	repository *repositories.Statistic
+	repository StatisticRepository
 }
 
 // NewStatistic constructor produces Statistic.
-func NewStatistic(repository *repositories.Statistic) *Statistic {
-	return &Statistic{repository: repository}
+func NewStatistic(repository StatisticRepository) Statistic {
+	return Statistic{repository: repository}
 }
 
 // GetStatistic receives dto.GetQueriesReq and calls repository to get statistic. Returns dto.QueryStatisticCollection.

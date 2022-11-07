@@ -16,8 +16,8 @@ type Statistic struct {
 }
 
 // NewStatistic constructor for NewStatistic.
-func NewStatistic(db *gorm.DB) *Statistic {
-	return &Statistic{db: db}
+func NewStatistic(db *gorm.DB) Statistic {
+	return Statistic{db: db}
 }
 
 // GetStatistic builds request to the database by provided filter and returns models.GetStatisticResultCollection.
