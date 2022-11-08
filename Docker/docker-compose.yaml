@@ -1,0 +1,59 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: "postgres:14.1"
+    container_name: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./Postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./Postgres/postgresql.conf:/etc/postgresql.conf
+    command:
+      - postgres
+      - -c
+      - config_file=/etc/postgresql.conf
+
+  pg_restore_dump_job:
+    image: "postgres:14.1"
+    container_name: pg_dump_restore
+    restart: on-failure
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+    volumes:
+      - ./postgres/dvdrental.tar:/etc/dvdrental.tar
+    command:
+      - pg_restore
+      - -d
+      - 'postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}'
+      - /etc/dvdrental.tar
+    depends_on:
+      - postgres
+
+  query-analizer:
+    build:
+      context: ./..
+      dockerfile: Docker/app/Dockerfile
+    container_name: query-analizer
+    restart: on-failure
+    environment:
+      APPLICATION_PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - pg_restore_dump_job
