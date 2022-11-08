@@ -70,7 +70,7 @@ func (t Statistic) GetQueriesStatistic(ctx *fiber.Ctx) error {
 		PerPage:   perPage,
 	}
 
-	if err := t.validator.Struct(&req); err != nil {
+	if err = t.validator.Struct(&req); err != nil {
 		return ctx.Status(http.StatusBadRequest).
 			JSON(NewBadRequestError("request validation error", err))
 	}

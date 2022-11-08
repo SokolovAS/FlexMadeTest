@@ -28,10 +28,10 @@ func main() {
 	val := validator.New()
 	r := repositories.NewStatistic(connection)
 	s := services.NewStatistic(r)
-	statisticTransport := http.NewStatistic(val, s)
+	h := http.NewStatistic(val, s)
 
 	app := fiber.New()
-	app.Get("/database/queries", statisticTransport.GetQueriesStatistic)
+	app.Get("/database/queries", h.GetQueriesStatistic)
 
 	if err = app.Listen(fmt.Sprintf(":%s", cfg.ApplicationPort)); err != nil {
 		logger.WithField("error", err).Fatal("error starting http server")
